@@ -31,7 +31,7 @@ class HomeHandler(RequestHandler):
 
             
             # Write out the message, and some space
-            self.write() 
+            self.write(m) 
             self.write("<br><br>") 
         # Write out the form to submit a new message
         self.write("""
@@ -69,7 +69,7 @@ class PeerHandler(RequestHandler):
         # get the peer's url
         peer = self.get_argument("peer")
         # Add the peer
-        peers.add()
+        peers.add(peer)
 
         # Send the peer all of our messages
         for msg in msgs:
