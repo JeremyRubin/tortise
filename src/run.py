@@ -83,7 +83,7 @@ class PeerHandler(RequestHandler):
         # Show the visitor a form to add a peer.
         self.write("""
             <h3> Add a Peer  </h3>
-            <h4> (enter in http://<hostname>/ format) </h4>
+            <h4> (enter in http://&lt;hostname&gt;/ format) </h4>
             <form method="POST">
             <input type="textarea" name="peer">
             <input type="submit">
