@@ -29,7 +29,7 @@ class HelloHandler(RequestHandler):
         <input type="submit">
         </form>
         <br>
-        Want to run a node? Grab a copy of the code <a href="https://github.com"> here </a>
+        Want to run a node? Grab a copy of the code <a href="https://github.com/JeremyRubin/tortise"> here </a>
         """)
     def post(self):
         msg = self.get_argument("msg")
@@ -53,7 +53,7 @@ class PeerHandler(RequestHandler):
         <input type="submit">
         </form>
         <br>
-        Want to run a node? Grab a copy of the code <a href="https://github.com"> here </a>
+        Want to run a node? Grab a copy of the code <a href="https://github.com/JeremyRubin/tortise"> here </a>
         """)
 
         
