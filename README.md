@@ -1,3 +1,12 @@
+# Tortise
+
+### What is Tortise
+Tortise is a (very) simple, distributed, decentralized twitter which runs over tor.
+It is designed to be a good basis for learning more about how to build systems
+on top of privacy protecting technology like Tor.
+
+
+### Instructions
 1. Install Tor Browser: https://www.torproject.org/
 2. Add the following lines to your torrc file.
     You'll need to customize the directory paths.
