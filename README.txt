@@ -46,3 +46,13 @@ Paste the address into the Tor Browser to connect.
 
 
 visit /peer on your website to put your friends domains (ie, http://<hostname>/ in and send/recieve messages
+
+
+
+
+CHALLENGE EXERCISES:
+
+Make your peers persistent: that is, make it so that you don't need to reconnect every time
+
+Allow People to post messages with a username...
+Make that username a keypair!
