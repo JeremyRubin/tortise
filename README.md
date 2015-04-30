@@ -7,6 +7,7 @@ on top of privacy protecting technology like Tor.
 
 
 ### Instructions
+0. Make sure you have the latest python installed, using a tool like brew
 0. Clone this repository to your home directory
 1. Install Tor Browser: https://www.torproject.org/
 2. Add the following lines to your torrc file.
@@ -17,6 +18,7 @@ on top of privacy protecting technology like Tor.
     ```
     Hints:
       * You'll need to customize the directory paths to wherever you cloned this repo!
+      * The priv/ subfolder will automatically be created
       * My torrc is located at: /Applications/TorBrowser.app/TorBrowser/Data/Tor/torrc
       * Still Need help? https://www.torproject.org/docs/tor-hidden-service.html.en has more detailed instructions
 
@@ -34,6 +36,6 @@ on top of privacy protecting technology like Tor.
   1. Make your peers persistent: that is, make it so that you don't need to reconnect every time
   2. Allow People to post messages with a username...
     * Make that username a keypair!
-  3. Make it lok a little bit nicer
+  3. Make a nicer user interface 
   4. Clear out old messages
   5. Make it so that only you can post to your server
