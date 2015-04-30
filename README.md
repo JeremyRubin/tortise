@@ -7,21 +7,20 @@ on top of privacy protecting technology like Tor.
 
 
 ### Instructions
+0. Clone this repository to your home directory
 1. Install Tor Browser: https://www.torproject.org/
 2. Add the following lines to your torrc file.
-    You'll need to customize the directory paths.
-
-
-    My torrc is located at: /Applications/TorBrowser.app/TorBrowser/Data/Tor/torrc
-
-    Factoid: the -rc suffix doesn't really stand for anything useful, but you can think of it as resource configuration.
 
     ```
-    HiddenServiceDir /Users/jeremyrubin/tortise/priv 
+    HiddenServiceDir /Users/<YOUR USERNAME>/tortise/priv 
     HiddenServicePort 80 127.0.0.1:8083
     ```
+    Hints:
+      * You'll need to customize the directory paths to wherever you cloned this repo!
+      * My torrc is located at: /Applications/TorBrowser.app/TorBrowser/Data/Tor/torrc
+      * Still Need help? https://www.torproject.org/docs/tor-hidden-service.html.en has more detailed instructions
 
-    Need help? https://www.torproject.org/docs/tor-hidden-service.html.en has more detailed instructions
+    Fun Fact: the -rc suffix doesn't really stand for anything useful, but you can think of it as resource configuration.
 3. (Re)Start TorBrowser.
 4. in src/, run `python run.py`
     You may need some dependencies:
