@@ -22,7 +22,7 @@ on top of privacy protecting technology like Tor.
 
     Fun Fact: the -rc suffix doesn't really stand for anything useful, but you can think of it as resource configuration.
 3. (Re)Start TorBrowser.
-4. in src/, run `python run.py`
+4. in src/, run `python run.py`, and leave it running. This is your server.
     You may need some dependencies:
     `pip install PySocks`
     `pip install tornado`
