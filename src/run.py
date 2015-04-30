@@ -1,8 +1,6 @@
 from tornado.ioloop import IOLoop
 from tornado.web import RequestHandler, Application, url
-import tornado.websocket
 from os import urandom
-import websocket
 import socks
 import socket
 def create_connection(address, timeout=None, source_address=None):
