@@ -15,6 +15,7 @@ socket.socket = socks.socksocket
 socket.create_connection = create_connection
 import urllib2
 import urllib
+import time
 
 # Server State: A set of messages, and a set of peers to send information to
 msgs = set([])
@@ -24,13 +25,16 @@ class HomeHandler(RequestHandler):
     """When the user visits the main page, show them the messages and a form to submit a new msg"""
     def get(self):
         # for every message...
-        for msg in msgs:
+        for (t, msg) in sorted(list(msgs)):
             # Prevent unescaped html from leaking
             # (try removing this, and submitting a message with html!)
             m = tornado.escape.xhtml_escape(msg) 
+            t = tornado.escape.xhtml_escape(t) 
 
             
             # Write out the message, and some space
+            self.write(t)
+            self.write("<br>")
             self.write(m) 
             self.write("<br><br>") 
         # Write out the form to submit a new message
@@ -43,6 +47,18 @@ class HomeHandler(RequestHandler):
             <br>
             Want to run a node? Grab a copy of the code <a
             href="https://github.com/JeremyRubin/tortise"> here </a> """)
+
+        # Show the visitor a form to add a peer.
+        self.write("""
+            <h3> Add a Peer  </h3>
+            <h4> (enter in http://&lt;hostname&gt;/ format) </h4>
+            <form method="POST" action="/peer">
+            <input type="textarea" name="peer">
+            <input type="submit">
+            </form>""")
+        self.write("<br><h3> Connected To </h3>")
+        for p in peers:
+            self.write(tornado.escape.xhtml_escape(p))
     def post(self):
         # Get the submitted message (fail otherwise)
         msg = self.get_argument("msg")
@@ -50,15 +66,10 @@ class HomeHandler(RequestHandler):
         # Check to see if we already have seen
         # this message, ignore if we have.
         # (why might that be the case?)
-        if not msg in msgs:
-            # Add the message
-            msgs.add(msg)
 
-            # Send our message to all of our peers
-            data = urllib.urlencode({"msg":msg})
-            for peer in peers:
-                req = urllib2.Request(url=peer,data=data)
-                urllib2.urlopen(req).read()
+        # Add the message
+        msgs.add((str(time.time()),msg))
+
         # Show the visitor the homepage again
         self.get()
 
@@ -71,27 +82,11 @@ class PeerHandler(RequestHandler):
         # Add the peer
         peers.add(peer)
 
-        # Send the peer all of our messages
-        for msg in msgs:
-            data = urllib.urlencode({"msg":msg})
-            req = urllib2.Request(url=peer, data=data)
-            urllib2.urlopen(req).read()
 
         # Show the visitor the main page
         self.redirect("/")
     def get(self):
-        # Show the visitor a form to add a peer.
-        self.write("""
-            <h3> Add a Peer  </h3>
-            <h4> (enter in http://&lt;hostname&gt;/ format) </h4>
-            <form method="POST">
-            <input type="textarea" name="peer">
-            <input type="submit">
-            </form>
-            <br>
-            Want to run a node? Grab a copy of the code <a
-            href="https://github.com/JeremyRubin/tortise"> here </a> """)
-
+        self.write(tornado.escape.json_encode(list(msgs)))
         
 def make_app():
     """ Set up the URL Routing """
@@ -99,11 +94,21 @@ def make_app():
         url(r"/", HomeHandler),     # Make the homepage handled by HomeHandler
         url(r"/peer", PeerHandler), # Do the same for peering
     ])
+def check_peers():
+    # Get messages from all of our peers
+    print "RUN"
+    for peer in peers:
+        req = peer+"peer"
+        result =urllib2.urlopen(req).read()
+        l = tornado.escape.json_decode(result)
+        final = map(tuple, l)
+        msgs.update(final)
 
 def main():
     app = make_app()
     # comminicate via port 8083
-    app.listen(8083)
+    app.listen(8084)
+    tornado.ioloop.PeriodicCallback(check_peers, 10000).start()
     # Start the App
     IOLoop.current().start()
 
